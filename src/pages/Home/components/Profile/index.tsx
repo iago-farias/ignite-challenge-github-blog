@@ -1,43 +1,53 @@
+import { useContext } from "react";
 import { FaArrowUpRightFromSquare, FaGithub, FaBuilding, FaUserGroup } from "react-icons/fa6";
 import { ProfileContainer } from "./styles";
+import { BlogContext } from "../../../../contexts/BlogContext";
 
 export function Profile(){
+  const {user} = useContext(BlogContext);
+
   return(
     <ProfileContainer>
-      <img src="https://avatars.githubusercontent.com/u/61480933?v=4" alt="user profile" />
+      <img src={user?.avatar_url} alt="user profile" />
 
       <div>
         <div className="userNameContainer">
-          <p>Iago Farias</p>
+          <p>{user?.name}</p>
 
-          <a href="https://github.com/iago-farias">
+          <a href={user?.html_url}>
             GITHUB
 
             <FaArrowUpRightFromSquare />
           </a>
         </div>
-
-        <p>
-          Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.
-        </p>
-
+        {
+          user?.bio && (
+            <p>
+              {user?.bio}
+            </p>
+          )
+        }
         <div className="userInfoContainer">
           <div>
             <FaGithub />
             <span>
-              iago-farias
+              {user?.login}
             </span>
           </div>
-          <div>
-            <FaBuilding />
-            <span>
-              Inside The Box
-            </span>
-          </div>
+          {
+            user?.company && (
+              <div>
+                <FaBuilding />
+                <span>
+                  {user?.company}
+                </span>
+              </div>
+            )
+          }
           <div>
             <FaUserGroup />
             <span>
-              8 seguidores
+            {user?.followers} seguidores
             </span>
           </div>
         </div>

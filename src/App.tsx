@@ -3,13 +3,16 @@ import { ThemeProvider } from "styled-components"
 import { Router } from "./Router"
 import { defaultTheme } from "./styles/themes/default"
 import { GlobalStyle } from "./styles/global"
+import { BlogContextProvider } from "./contexts/BlogContext"
 
 function App() {
   return(
     <ThemeProvider theme={defaultTheme}>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
+      <BlogContextProvider>
+        <BrowserRouter>
+          <Router />
+        </BrowserRouter>
+      </BlogContextProvider>
       <GlobalStyle />
     </ThemeProvider>
   )

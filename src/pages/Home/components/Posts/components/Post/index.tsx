@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import { PostContainer } from "./styles";
 
-export function Post(){
-  return(
-    <PostContainer>
+export function Post() {
+  const navigate = useNavigate();
+
+  return (
+    <PostContainer onClick={() => navigate("post")}>
       <div>
         <h2>
           JavaScript data types and data structures

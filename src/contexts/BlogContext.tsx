@@ -4,6 +4,8 @@ import { api } from "../lib/axios";
 
 interface BlogContextType {
   user?: GitHubUser;
+  issues: GitHubIssue[];
+  listAllIssues: (query: string) => Promise<void>
 }
 
 interface GitHubUser {
@@ -17,30 +19,52 @@ interface GitHubUser {
   followers: number;
 }
 
+export interface GitHubIssue {
+  number: number;
+  title: string;
+  body: string;
+  html_url: string;
+  created_at: Date;
+  comments: number;
+}
+
 interface BlogContextProviderProps {
   children: ReactNode
 }
 
 export const BlogContext = createContext({} as BlogContextType);
 
-export function BlogContextProvider({children} : BlogContextProviderProps){
+export function BlogContextProvider({ children }: BlogContextProviderProps) {
   const [user, setUser] = useState<GitHubUser>();
+  const [issues, setIssues] = useState<GitHubIssue[]>([]);
 
   useEffect(() => {
     getUserData();
   }, []);
 
-  async function getUserData(){
+  async function getUserData() {
     const response = await api.get("/users/iago-farias");
 
     const userData = response.data as GitHubUser;
-    
+
     setUser(userData);
   }
-  
-  return(
+
+  async function listAllIssues(query: string) {
+    const response = await api.get(`/search/issues?q=${query}%20repo:iago-farias/ignite-challenge-github-blog`);
+
+    const { items } = response.data as {items: GitHubIssue[]};
+
+    setIssues(items);
+  }
+
+  return (
     <BlogContext.Provider
-      value={{user}}
+      value={{
+        user,
+        issues,
+        listAllIssues
+      }}
     >
       {
         children

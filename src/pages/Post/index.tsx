@@ -43,7 +43,7 @@ export function Post() {
             Voltar
           </LinkButton>
           
-          <a href={issue.html_url}>
+          <a href={issue.html_url} target="_blank">
             <LinkButton>
               VER NO GITHUB
 

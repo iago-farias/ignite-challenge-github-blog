@@ -12,7 +12,7 @@ const searchFormSchema = z.object({
 
 type SearchFormInputs = z.infer<typeof searchFormSchema>
 
-export function SerchForm(){
+export function SearchForm(){
   const {register, watch} = useForm<SearchFormInputs>({
     defaultValues: {query: ""},
     resolver: zodResolver(searchFormSchema)

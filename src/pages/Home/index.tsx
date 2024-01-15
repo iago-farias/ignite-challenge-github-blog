@@ -1,12 +1,12 @@
 import { Posts } from "./components/Posts";
 import { Profile } from "./components/Profile";
-import { SerchForm } from "./components/SerchForm";
+import { SearchForm } from "./components/SearchForm";
 
 export function Home(){
   return(
     <div>
       <Profile />
-      <SerchForm />
+      <SearchForm />
       <Posts />
     </div>
   )

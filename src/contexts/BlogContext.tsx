@@ -8,7 +8,7 @@ interface BlogContextType {
   listAllIssues: (query: string) => Promise<void>
 }
 
-interface GitHubUser {
+export interface GitHubUser {
   login: string;
   avatar_url: string;
   html_url: string;
@@ -26,6 +26,7 @@ export interface GitHubIssue {
   html_url: string;
   created_at: Date;
   comments: number;
+  user: GitHubUser;
 }
 
 interface BlogContextProviderProps {

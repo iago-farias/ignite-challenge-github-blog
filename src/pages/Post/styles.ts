@@ -24,6 +24,10 @@ export const PostDescription = styled.div`
     align-items: center;
     justify-content: space-between;
     margin-bottom: 1.25rem;
+
+    a {
+      text-decoration: none;
+    }
   }
 
   .postInfoContainer {
@@ -89,6 +93,7 @@ export const LinkButton = styled.div`
   text-transform: uppercase;
 
   &:hover {
+    transition:  border-bottom 0.7s;
     cursor: pointer;
     border-bottom: 1px solid ${(props) => props.theme["blue"]};
   }

@@ -41,7 +41,7 @@ export function SerchForm(){
     <SerchFormContainer>
       <div>
         <span>Publicações</span>
-        <span>{issues.length} publicações</span>
+        <span>{issues.length} publicaç{issues.length === 1 ? "ão" : "ões"}</span>
       </div>
       <SearchInput 
         placeholder="Buscar conteúdo"

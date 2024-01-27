@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { SearchInput, SerchFormContainer } from "./styles";
 import { BlogContext } from "../../../../contexts/BlogContext";
+import { Skeleton } from "../../../../components/Skeleton/styles";
 
 const searchFormSchema = z.object({
   query: z.string(),
@@ -19,7 +20,7 @@ export function SearchForm(){
   });
   
   const query = watch("query");
-  const {issues, listAllIssues} = useContext(BlogContext);
+  const {issues, isLoadingIssues, listAllIssues} = useContext(BlogContext);
 
   useEffect(() => {
     listAllIssues("");
@@ -41,9 +42,18 @@ export function SearchForm(){
     <SerchFormContainer>
       <div>
         <span>Publicações</span>
-        <span>{issues.length} publicaç{issues.length === 1 ? "ão" : "ões"}</span>
+       {
+        isLoadingIssues ? (
+          <div style={{width: 120, height: 20, marginBottom: 0 }}>
+            <Skeleton />
+          </div>
+        ) : (
+          <span>{issues.length} publicaç{issues.length === 1 ? "ão" : "ões"}</span>
+        ) 
+       }
       </div>
-      <SearchInput 
+      <SearchInput
+        disabled={isLoadingIssues}
         placeholder="Buscar conteúdo"
         {...register("query")}
       />

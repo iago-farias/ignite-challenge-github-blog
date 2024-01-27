@@ -93,7 +93,7 @@ export const LinkButton = styled.div`
   text-transform: uppercase;
 
   &:hover {
-    transition:  border-bottom 0.7s;
+    transition: border-bottom 0.7s;
     cursor: pointer;
     border-bottom: 1px solid ${(props) => props.theme["blue"]};
   }

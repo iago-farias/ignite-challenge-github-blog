@@ -5,6 +5,7 @@ import { api } from "../lib/axios";
 interface BlogContextType {
   user?: GitHubUser;
   issues: GitHubIssue[];
+  isLoadingIssues: boolean;
   listAllIssues: (query: string) => Promise<void>
 }
 
@@ -38,6 +39,7 @@ export const BlogContext = createContext({} as BlogContextType);
 export function BlogContextProvider({ children }: BlogContextProviderProps) {
   const [user, setUser] = useState<GitHubUser>();
   const [issues, setIssues] = useState<GitHubIssue[]>([]);
+  const [isLoadingIssues, setIsloadingIssues] = useState(true);
 
   useEffect(() => {
     getUserData();
@@ -52,11 +54,13 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
   }
 
   async function listAllIssues(query: string) {
+    setIsloadingIssues(true);
     const response = await api.get(`/search/issues?q=${query}%20repo:iago-farias/ignite-challenge-github-blog`);
-
+    
     const { items } = response.data as {items: GitHubIssue[]};
-
+    
     setIssues(items);
+    setIsloadingIssues(false);
   }
 
   return (
@@ -64,6 +68,7 @@ export function BlogContextProvider({ children }: BlogContextProviderProps) {
       value={{
         user,
         issues,
+        isLoadingIssues,
         listAllIssues
       }}
     >

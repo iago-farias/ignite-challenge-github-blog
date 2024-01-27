@@ -8,7 +8,7 @@ import { ptBR } from "date-fns/locale/pt-BR";
 import { LinkButton, PostContent, PostDescription } from "./styles";
 import { api } from "../../lib/axios";
 import { GitHubIssue, GitHubUser } from "../../contexts/BlogContext";
-
+import { Skeleton } from "../../components/Skeleton/styles";
 
 export function Post() {
   const [issue, setIssue] = useState<GitHubIssue>({
@@ -18,20 +18,23 @@ export function Post() {
     html_url: "",
     number: 0,
     title: "",
-    user: {login: ""} as GitHubUser
+    user: { login: "" } as GitHubUser
   });
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const {number} = useParams();
+  const navigate = useNavigate();
+  const { number } = useParams();
 
   useEffect(() => {
     getIssue();
   }, []);
 
-  async function getIssue(){
+  async function getIssue() {
+    setIsLoading(true)
     const response = await api.get(`repos/iago-farias/ignite-challenge-github-blog/issues/${number}`);
-    
+
     setIssue(response.data);
+    setIsLoading(false)
   }
 
   return (
@@ -42,44 +45,85 @@ export function Post() {
             <FaChevronLeft />
             Voltar
           </LinkButton>
-          
-          <a href={issue.html_url} target="_blank">
-            <LinkButton>
-              VER NO GITHUB
 
-              <FaArrowUpRightFromSquare />
-            </LinkButton>
-          </a>
+          {
+            isLoading ? (
+              <div style={{ width: 100, height: 30 }}>
+                <Skeleton />
+              </div>
+            ) : (
+              <a href={issue.html_url} target="_blank">
+                <LinkButton>
+                  VER NO GITHUB
+
+                  <FaArrowUpRightFromSquare />
+                </LinkButton>
+              </a>
+            )
+          }
         </div>
-
-        <h1>{issue.title}</h1>
-
+        {
+          isLoading ? (
+            <div style={{ width: "90%", height: 30 }}>
+              <Skeleton />
+            </div>
+          ) : (
+            <h1>{issue.title}</h1>
+          )
+        }
         <div className="postInfoContainer">
-          <div>
-            <FaGithub />
-            <span>
-              {issue.user.login}
-            </span>
-          </div>
-          <div>
-            <FaCalendarDay />
-            <span>
-              {formatDistance(new Date(), issue.created_at, {locale: ptBR})}
-            </span>
-          </div>
-          <div>
-            <FaComment />
-            <span>
-              {issue.comments} Comentários
-            </span>
-          </div>
+          {
+            isLoading ? (
+              <>
+                <div style={{ width: 120, height: 30 }}>
+                  <Skeleton />
+                </div>
+                <div style={{ width: 120, height: 30 }}>
+                  <Skeleton />
+                </div>
+                <div style={{ width: 120, height: 30 }}>
+                  <Skeleton />
+                </div>
+              </>
+            ) : (
+              <>
+                <div>
+                  <FaGithub />
+                  <span>
+                    {issue.user.login}
+                  </span>
+                </div>
+                <div>
+                  <FaCalendarDay />
+                  <span>
+                    {formatDistance(new Date(), issue.created_at, { locale: ptBR })}
+                  </span>
+                </div>
+                <div>
+                  <FaComment />
+                  <span>
+                    {issue.comments} Comentários
+                  </span>
+                </div>
+              </>
+            )
+          }
         </div>
       </PostDescription>
-
       <PostContent>
-        <Markdown>
-          {issue.body}
-        </Markdown>
+        {
+          isLoading ? (
+            <div
+              style={{ width: "100%", height: 400 }}
+            >
+              <Skeleton />
+            </div>
+          ) : (
+            <Markdown>
+              {issue.body}
+            </Markdown>
+          )
+        }
       </PostContent>
     </div>
   )

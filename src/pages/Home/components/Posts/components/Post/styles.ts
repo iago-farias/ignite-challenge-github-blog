@@ -8,30 +8,6 @@ export const PostContainer = styled.div`
   overflow: hidden;
   border: 2px solid transparent;
 
-  div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-
-    h2 {
-      font-size: 1.25rem;
-      font-family: 700;
-      line-height: 160%;
-      color: ${(props) => props.theme["base-title"]};
-      width: 70%;
-    }
-
-    span {
-      font-size: 0.875rem;
-      font-family: 400;
-      line-height: 160%;
-      color: ${(props) => props.theme["base-span"]};
-      width: 30%;
-      text-align: right;
-    }
-  }
-
   p {
     font-size: 1rem;
     font-family: 400;
@@ -50,5 +26,50 @@ export const PostContainer = styled.div`
   &:hover {
     border: 2px solid ${(props) => props.theme["base-label"]};
     cursor: pointer;
+  }
+`;
+
+export const PostHeader = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  h2 {
+    font-size: 1.25rem;
+    font-family: 700;
+    line-height: 160%;
+    color: ${(props) => props.theme["base-title"]};
+    width: 70%;
+  }
+
+  span {
+    font-size: 0.875rem;
+    font-family: 400;
+    line-height: 160%;
+    color: ${(props) => props.theme["base-span"]};
+    width: 30%;
+    text-align: right;
+  }
+`;
+
+export const PostContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-top: 1.25rem;
+  font-family: "Nunito";
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  color: ${(props) => props.theme["base-text"]};
+
+  img {
+    width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: ${(props) => props.theme["blue"]};
   }
 `;
